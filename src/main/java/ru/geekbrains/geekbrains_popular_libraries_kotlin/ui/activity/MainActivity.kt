@@ -2,37 +2,30 @@ package ru.geekbrains.geekbrains_popular_libraries_kotlin.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.ActivityMainBinding
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.mvp.presenter.MainPresenter
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.mvp.view.MainView
 
 class MainActivity : AppCompatActivity(), MainView {
 
-    private var vb: ActivityMainBinding? = null
-    val presenter by lazy { MainPresenter(this) }
+    private val presenter by lazy { MainPresenter(this) }
+    private var _vb: ActivityMainBinding? = null
+    private val vb get() = _vb!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vb = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(vb?.root)
+        _vb = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(vb.root)
 
-        val listener = View.OnClickListener {
-            presenter.counterClick(it.id)
-        }
-
-        vb?.btnCounter1?.setOnClickListener(listener)
-        vb?.btnCounter2?.setOnClickListener(listener)
-        vb?.btnCounter3?.setOnClickListener(listener)
-
+        vb.btnCounter1.setOnClickListener { presenter.btnOneClick() }
+        vb.btnCounter2.setOnClickListener { presenter.btnTwoClick() }
+        vb.btnCounter3.setOnClickListener { presenter.btnThreeClick() }
     }
 
-    override fun setButtonText(index: Int, text: String) {
-        when(index){
-            0 -> vb?.btnCounter1?.text = text
-            1 -> vb?.btnCounter2?.text = text
-            2 -> vb?.btnCounter3?.text = text
-        }
-    }
+    override fun setButtonOneTxt(text: String) { vb.btnCounter1.text = text}
+
+    override fun setButtonTwoTxt(text: String) { vb.btnCounter2.text = text }
+
+    override fun setButtonThreeTxt(text: String) { vb.btnCounter3.text = text }
 
 }
