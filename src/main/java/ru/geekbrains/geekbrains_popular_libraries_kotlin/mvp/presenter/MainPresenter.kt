@@ -1,28 +1,24 @@
 package ru.geekbrains.geekbrains_popular_libraries_kotlin.mvp.presenter
 
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.R
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.mvp.model.CountersModel
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.mvp.view.MainView
 
+class MainPresenter(private val view: MainView) {
 
-class MainPresenter(val view: MainView) {
+    private val model = CountersModel()
 
-    val model = CountersModel()
+    fun btnOneClick() {
+        val nextValue = model.next(0)
+        view.setButtonOneTxt(nextValue.toString())
+    }
 
-    fun counterClick(id: Int){
-        when(id){
-            R.id.btn_counter1 -> {
-                val nextValue = model.next(0)
-                view.setButtonText(0, nextValue.toString())
-            }
-            R.id.btn_counter2 -> {
-                val nextValue = model.next(1)
-                view.setButtonText(1, nextValue.toString())
-            }
-            R.id.btn_counter3 -> {
-                val nextValue = model.next(2)
-                view.setButtonText(2, nextValue.toString())
-            }
-        }
+    fun btnTwoClick() {
+        val nextValue = model.next(1)
+        view.setButtonTwoTxt(nextValue.toString())
+    }
+
+    fun btnThreeClick() {
+        val nextValue = model.next(2)
+        view.setButtonThreeTxt(nextValue.toString())
     }
 }
