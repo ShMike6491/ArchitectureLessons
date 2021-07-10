@@ -8,7 +8,6 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.App
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.BackButtonListener
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.R
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.ActivityMainBinding
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.UsersFragment
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.AndroidScreens
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.presenter.MainPresenter
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.view.MainView

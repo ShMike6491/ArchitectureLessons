@@ -9,15 +9,15 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.BackButtonListener
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.R
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.FragmentUsersBinding
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.model.UsersStore
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.AndroidScreens
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.presenter.UsersPresenter
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.view.UsersView
 
-class UsersFragment private constructor() :
-    MvpAppCompatFragment(R.layout.fragment_users), UsersView, BackButtonListener {
+class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, BackButtonListener {
     private var binding: FragmentUsersBinding? = null
     private val b get() = binding!!
 
-    private val presenter by moxyPresenter { UsersPresenter(UsersStore(), App.instance.router) }
+    private val presenter by moxyPresenter { UsersPresenter(UsersStore(), App.instance.router, AndroidScreens()) }
     private var adapter: UsersAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
