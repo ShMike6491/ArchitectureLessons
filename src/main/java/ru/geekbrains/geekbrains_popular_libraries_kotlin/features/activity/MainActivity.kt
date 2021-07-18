@@ -9,8 +9,6 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.BackButtonListener
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.R
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.ActivityMainBinding
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.AndroidScreens
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.presenter.MainPresenter
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.view.MainView
 
 class MainActivity : MvpAppCompatActivity(), MainView {
     private var _vb: ActivityMainBinding? = null

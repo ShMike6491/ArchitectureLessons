@@ -1,13 +1,14 @@
-package ru.geekbrains.geekbrains_popular_libraries_kotlin.presenter
+package ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users
 
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.model.User
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.model.UsersStore
+import moxy.MvpView
+import moxy.viewstate.strategy.alias.AddToEndSingle
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.User
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.UsersStore
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.IScreens
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.presenter.list.IUserListPresenter
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.view.UsersView
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.view.list.IUserItemView
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.list.IItemView
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.list.IUserItemView
 
 class UsersPresenter(
     private val usersRepo: UsersStore,
@@ -56,3 +57,17 @@ class UsersPresenter(
         }
     }
 }
+
+@AddToEndSingle
+interface UsersView : MvpView {
+    fun init()
+    fun updateList()
+}
+
+interface IListPresenter<V: IItemView> {
+    var itemClickListener: ((V) -> Unit)?
+    fun bindView(view: V)
+    fun getCount(): Int
+}
+
+interface IUserListPresenter : IListPresenter<IUserItemView>

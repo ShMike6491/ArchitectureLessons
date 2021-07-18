@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.ItemUserBinding
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.presenter.list.IUserListPresenter
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.view.list.IUserItemView
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.list.IUserItemView
 
 class UsersAdapter(private val presenter: IUserListPresenter) :
     RecyclerView.Adapter<UsersAdapter.ViewHolder>() {

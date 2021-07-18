@@ -6,9 +6,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.R
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.FragmentDetailsBinding
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.model.User
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.presenter.DetailsPresenter
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.view.DetailsView
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.User
 
 class DetailsFragment : MvpAppCompatFragment(R.layout.fragment_details), DetailsView {
 
