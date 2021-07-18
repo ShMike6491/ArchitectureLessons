@@ -4,4 +4,9 @@
     <string name="counter_two">Счетчик 2</string>
     <string name="counter_three">Счетчик 3</string>
     <string name="convertor_convert_btn">Convert</string>
+    <string name="convertor_select_btn">  Select  </string>
+    <string name="convertor_cancel_btn">Cancel</string>
+    <string name="convertor_error_txt">Something Went Wrong</string>
+    <string name="convertor_success_txt">Image Has Been Saved</string>
+    <string name="convert_begin_txt">Pick an Image You Want to Convert</string>
 </resources>

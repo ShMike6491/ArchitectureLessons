@@ -9,5 +9,5 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.model.User
 class AndroidScreens : IScreens {
     override fun users() = FragmentScreen { UsersFragment.newInstance() }
     override fun details(user: User) = FragmentScreen { DetailsFragment.newInstance(user) }
-    override fun convertor() = FragmentScreen { ConvertorFragment() }
+    override fun convertor() = FragmentScreen { ConvertorFragment.newInstance() }
 }
