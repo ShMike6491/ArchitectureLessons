@@ -124,6 +124,6 @@ class ConvertorFragment :
     }
 
     class ImageEnvelope(private val source: Uri) : IImage {
-        override fun getPath() = source
+        override fun getPath() = source.path!!
     }
 }

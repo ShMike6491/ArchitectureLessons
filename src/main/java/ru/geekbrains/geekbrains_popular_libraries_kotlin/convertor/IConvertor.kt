@@ -1,6 +1,5 @@
 package ru.geekbrains.geekbrains_popular_libraries_kotlin.convertor
 
-import android.net.Uri
 import io.reactivex.rxjava3.core.Completable
 
 interface IConvertor {
@@ -8,5 +7,5 @@ interface IConvertor {
 }
 
 interface IImage {
-    fun getPath(): Uri
+    fun getPath(): String
 }
