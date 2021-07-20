@@ -2,6 +2,7 @@ package ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users
 
 import android.os.Bundle
 import android.view.View
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.App
@@ -15,7 +16,12 @@ class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, 
     private var binding: FragmentUsersBinding? = null
     private val b get() = binding!!
 
-    private val presenter by moxyPresenter { UsersPresenter(UsersStore(), App.instance.router, AndroidScreens()) }
+    private val presenter by moxyPresenter { UsersPresenter(
+        AndroidSchedulers.mainThread(),
+        UsersStore(),
+        App.instance.router,
+        AndroidScreens()
+    ) }
     private var adapter: UsersAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

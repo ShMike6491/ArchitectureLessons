@@ -1,6 +1,7 @@
 package ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users
 
 import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEndSingle
@@ -11,6 +12,7 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.list.IIt
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.list.IUserItemView
 
 class UsersPresenter(
+    private val mainThread: Scheduler,
     private val usersRepo: UsersStore,
     private val router: Router,
     private val screens: IScreens
@@ -21,24 +23,24 @@ class UsersPresenter(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.init()
 
-        usersRepo.getObservable().subscribe({ newList ->
-            usersList = newList
-            loadData()
-        }, { error ->
-            error.printStackTrace()
-        })
+        viewState.init()
+        loadData()
 
         usersListPresenter.itemClickListener = { itemView ->
             router.navigateTo(screens.details(usersList[itemView.pos]))
         }
     }
 
-    private fun loadData() {
-        usersListPresenter.users.addAll(usersList)
-        viewState.updateList()
-    }
+    private fun loadData() = usersRepo.getObservable().subscribeOn(mainThread)
+        .subscribe({ newList ->
+            usersList = newList
+            usersListPresenter.users.clear()
+            usersListPresenter.users.addAll(newList)
+            viewState.updateList()
+        }, { error ->
+            error.printStackTrace()
+        })
 
     fun backPressed(): Boolean {
         router.exit()
@@ -64,7 +66,7 @@ interface UsersView : MvpView {
     fun updateList()
 }
 
-interface IListPresenter<V: IItemView> {
+interface IListPresenter<V : IItemView> {
     var itemClickListener: ((V) -> Unit)?
     fun bindView(view: V)
     fun getCount(): Int
