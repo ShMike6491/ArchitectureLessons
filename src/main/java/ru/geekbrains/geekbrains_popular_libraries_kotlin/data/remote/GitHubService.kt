@@ -9,11 +9,15 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Url
 
 interface GitHubService {
 
     @GET("/users")
     fun getUsersRequest(): Single<List<GitHubUser>>
+
+    @GET
+    fun getReposRequest(@Url url: String): Single<List<GitHubRepo>>
 
     companion object {
         private const val BASE_URL = " https://api.github.com/"

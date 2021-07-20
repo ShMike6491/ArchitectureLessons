@@ -8,8 +8,8 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.IRepository
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.User
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.IScreens
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.list.IItemView
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.list.IUserItemView
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.shared.IItemView
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.shared.IListPresenter
 
 class UsersPresenter(
     private val mainThread: Scheduler,
@@ -67,10 +67,9 @@ interface UsersView : MvpView {
     fun updateList()
 }
 
-interface IListPresenter<V : IItemView> {
-    var itemClickListener: ((V) -> Unit)?
-    fun bindView(view: V)
-    fun getCount(): Int
+interface IUserItemView: IItemView {
+    fun setLogin(text: String)
+    fun loadAvatar(url: String)
 }
 
 interface IUserListPresenter : IListPresenter<IUserItemView>

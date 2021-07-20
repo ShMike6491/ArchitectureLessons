@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.ItemUserBinding
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.list.IUserItemView
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.util.IImageLoader
 
 class UsersAdapter(private val presenter: IUserListPresenter, val imageLoader: IImageLoader<ImageView>) :
