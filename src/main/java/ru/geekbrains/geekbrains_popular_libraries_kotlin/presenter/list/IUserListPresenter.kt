@@ -1,5 +1,0 @@
-package ru.geekbrains.geekbrains_popular_libraries_kotlin.presenter.list
-
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.view.list.IUserItemView
-
-interface IUserListPresenter : IListPresenter<IUserItemView>
