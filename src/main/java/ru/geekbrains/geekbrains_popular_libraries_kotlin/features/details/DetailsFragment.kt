@@ -11,7 +11,11 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.presenter.DetailsPresen
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.view.DetailsView
 
 class DetailsFragment : MvpAppCompatFragment(R.layout.fragment_details), DetailsView {
-    private val presenter by moxyPresenter { DetailsPresenter() }
+
+    private val presenter by moxyPresenter {
+        val user: User = arguments?.getParcelable(DETAILS_TAG)!!
+        DetailsPresenter(user)
+    }
 
     private var binding: FragmentDetailsBinding? = null
     private val b get() = binding!!
@@ -19,8 +23,6 @@ class DetailsFragment : MvpAppCompatFragment(R.layout.fragment_details), Details
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDetailsBinding.bind(view)
-        val user: User = arguments?.getParcelable(DETAILS_TAG)!!
-        presenter.userReceived(user)
     }
 
     override fun showUserData(text: String) { b.tvUser.text = text }

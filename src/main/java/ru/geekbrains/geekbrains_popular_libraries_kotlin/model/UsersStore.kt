@@ -1,5 +1,7 @@
 package ru.geekbrains.geekbrains_popular_libraries_kotlin.model
 
+import io.reactivex.rxjava3.core.Observable
+
 class UsersStore {
     private val repositories = listOf(
         User("login1"),
@@ -9,7 +11,5 @@ class UsersStore {
         User("login5")
     )
 
-    fun getUsers() : List<User> {
-        return repositories
-    }
+    fun getObservable() : Observable<List<User>> = Observable.just(repositories)
 }

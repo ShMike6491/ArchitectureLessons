@@ -16,12 +16,18 @@ class UsersPresenter(
 ) : MvpPresenter<UsersView>() {
 
     val usersListPresenter = UsersListPresenter()
-    private val usersList = usersRepo.getUsers()
+    private lateinit var usersList: List<User>
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        loadData()
+
+        usersRepo.getObservable().subscribe({ newList ->
+            usersList = newList
+            loadData()
+        }, { error ->
+            error.printStackTrace()
+        })
 
         usersListPresenter.itemClickListener = { itemView ->
             router.navigateTo(screens.details(usersList[itemView.pos]))
@@ -29,8 +35,7 @@ class UsersPresenter(
     }
 
     private fun loadData() {
-        val users = usersList
-        usersListPresenter.users.addAll(users)
+        usersListPresenter.users.addAll(usersList)
         viewState.updateList()
     }
 
