@@ -10,7 +10,7 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.IScreens
 class MainPresenter(private val router: Router, val screens: IScreens) : MvpPresenter<MainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        router.replaceScreen(screens.convertor())
+        router.replaceScreen(screens.users())
     }
 
     fun backClicked() {

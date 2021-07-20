@@ -7,7 +7,7 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.User
 
 class DetailsPresenter(private val user: User) : MvpPresenter<DetailsView>() {
     override fun onFirstViewAttach() {
-        viewState.showUserData(user.login)
+        user.login?.let { viewState.showUserData(it) }
     }
 }
 
