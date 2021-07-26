@@ -4,8 +4,15 @@
     android:layout_height="50dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:foreground="?attr/selectableItemBackground"
     android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/users_lisr_avatar"
+        tools:src="@tools:sample/backgrounds/scenic"/>
 
     <TextView
         android:id="@+id/tv_login"

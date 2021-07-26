@@ -21,7 +21,8 @@ class ImageConvertor(private val context: Context) : IConvertor {
 
     override fun convert(imageResource: IImage): Completable = Completable.fromAction {
         freezeThread(2000)
-        val bitmap = convertUriToBitmap(imageResource.getPath())
+        val uri = Uri.parse(imageResource.getPath())
+        val bitmap = convertUriToBitmap(uri)
         saveImageToFile(bitmap)
     }.subscribeOn(Schedulers.io())
 
