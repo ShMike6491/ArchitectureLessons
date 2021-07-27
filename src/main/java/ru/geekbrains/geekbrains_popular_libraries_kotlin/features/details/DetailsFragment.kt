@@ -18,7 +18,7 @@ class DetailsFragment : MvpAppCompatFragment(R.layout.fragment_details), Details
         DetailsPresenter(
             arguments?.getParcelable(DETAILS_TAG)!!,
             AndroidSchedulers.mainThread(),
-            App.instance.repository(),
+            App.instance.repository,
             App.instance.router,
             AndroidScreens()
         )

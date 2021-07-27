@@ -3,9 +3,11 @@ package ru.geekbrains.geekbrains_popular_libraries_kotlin.data.remote
 import com.google.gson.annotations.Expose
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.Repo
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.User
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.local.LocalRepository
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.local.LocalUser
 
 data class GitHubUser(
-    @Expose val id: String? = null,
+    @Expose val id: String,
     @Expose val login: String? = null,
     @Expose val avatarUrl: String? = null,
     @Expose val reposUrl: String? = null,
@@ -19,7 +21,7 @@ data class GitHubUser(
 )
 
 data class GitHubRepo(
-    @Expose val id: String? = null,
+    @Expose val id: String,
     @Expose val name: String? = null,
     @Expose val owner: GitHubUser? = null,
     @Expose val description: String? = null,
@@ -46,6 +48,13 @@ fun List<GitHubUser>.asDomainUsers(): List<User> = map {
 }
 
 /**
+ * Extension function to convert network data layer to the database entities
+ */
+fun List<GitHubUser>.asDatabaseUsers(): List<LocalUser> = map {
+    LocalUser(id = it.id, login = it.login ?: "", avatar = it.avatarUrl ?: "", repos = it.reposUrl ?: "")
+}
+
+/**
  * Extension function to convert network data layer to the application layer
  */
 fun List<GitHubRepo>.asDomainRepos(): List<Repo> = map {
@@ -62,4 +71,12 @@ fun List<GitHubRepo>.asDomainRepos(): List<Repo> = map {
         watchers = it.watchersCount,
         issues = it.openIssuesCount
     )
+}
+
+/**
+ * Extension function to convert network data layer to the database entities
+ * @param userId is required for the relations in room between user entity and repository entity
+ */
+fun List<GitHubRepo>.asDatabaseRepos(userId: String): List<LocalRepository> = map {
+    LocalRepository(id = it.id, name = it.name ?: "", forksCount = it.forksCount ?: 0, starsCount = it.stargazersCount ?: 0, language = it.language ?: "", userId = userId)
 }
