@@ -11,7 +11,9 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.R
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.FragmentDetailsBinding
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.User
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.AndroidScreens
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.network.AndroidNetworkStatus
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.util.GlideImageLoader
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.util.ImageCacheImpl
 
 class DetailsFragment : MvpAppCompatFragment(R.layout.fragment_details), DetailsView, BackButtonListener {
     private val presenter by moxyPresenter {
@@ -33,7 +35,14 @@ class DetailsFragment : MvpAppCompatFragment(R.layout.fragment_details), Details
     }
 
     override fun init(user: User) {
-        adapter = DetailsAdapter(presenter.listPresenter, user, GlideImageLoader())
+        adapter = DetailsAdapter(
+            presenter.listPresenter, user,
+            GlideImageLoader(
+                AndroidNetworkStatus(requireContext()),
+                ImageCacheImpl(App.instance.database, requireContext()),
+                AndroidSchedulers.mainThread()
+            )
+        )
         b.rvContainer.adapter = adapter
     }
 
