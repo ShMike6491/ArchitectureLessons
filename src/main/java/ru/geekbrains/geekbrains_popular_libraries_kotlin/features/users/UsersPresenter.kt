@@ -10,13 +10,13 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.User
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.IScreens
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.shared.IItemView
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.shared.IListPresenter
+import javax.inject.Inject
 
-class UsersPresenter(
-    private val mainThread: Scheduler,
-    private val repo: IRepository,
-    private val router: Router,
-    private val screens: IScreens
-) : MvpPresenter<UsersView>() {
+class UsersPresenter : MvpPresenter<UsersView>() {
+    @Inject lateinit var repo: IRepository
+    @Inject lateinit var router: Router
+    @Inject lateinit var screens: IScreens
+    @Inject lateinit var mainThread: Scheduler
 
     val usersListPresenter = UsersListPresenter()
     private lateinit var usersList: List<User>

@@ -6,9 +6,12 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.ItemUserBinding
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.util.IImageLoader
+import javax.inject.Inject
 
-class UsersAdapter(private val presenter: IUserListPresenter, val imageLoader: IImageLoader<ImageView>) :
+class UsersAdapter(private val presenter: IUserListPresenter) :
     RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+
+    @Inject lateinit var imageLoader: IImageLoader<ImageView>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)

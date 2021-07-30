@@ -1,6 +1,7 @@
 package ru.geekbrains.geekbrains_popular_libraries_kotlin.features.activity
 
 import android.os.Bundle
+import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -8,30 +9,34 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.App
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.BackButtonListener
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.R
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.ActivityMainBinding
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.AndroidScreens
+import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(), MainView {
+    @Inject lateinit var navHolder: NavigatorHolder
+    private val navigator = AppNavigator(this, R.id.container)
     private var _vb: ActivityMainBinding? = null
     private val vb get() = _vb!!
-    private val navigator = AppNavigator(this, R.id.container)
     private val presenter by moxyPresenter {
-        MainPresenter(App.instance.router, AndroidScreens())
+        MainPresenter().apply{
+            App.instance.appComponent.inject(this)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb.root)
+        App.instance.appComponent.inject(this)
     }
 
     override fun onResumeFragments() {
         super.onResumeFragments()
-        App.instance.navigatorHolder.setNavigator(navigator)
+        navHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
         super.onPause()
-        App.instance.navigatorHolder.removeNavigator()
+        navHolder.removeNavigator()
     }
 
     override fun onBackPressed() {

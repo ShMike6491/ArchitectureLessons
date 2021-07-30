@@ -1,7 +1,5 @@
 package ru.geekbrains.geekbrains_popular_libraries_kotlin.data.local
 
-import android.content.Context
-import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @androidx.room.Database(
@@ -15,19 +13,6 @@ abstract class LocalDatabase : RoomDatabase() {
     abstract val imageDao: ImageDao
 
     companion object {
-        private const val DB_NAME = "database.db"
-
-        @Volatile
-        private var INSTANCE: LocalDatabase? = null
-        fun getInstance() = INSTANCE ?: throw RuntimeException("Database has not been created. Please call create(context)")
-
-        fun create(context: Context?): LocalDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(context!!, LocalDatabase::class.java, DB_NAME)
-                    .build()
-                INSTANCE = instance
-                instance
-            }
-        }
+        const val DB_NAME = "database.db"
     }
 }
