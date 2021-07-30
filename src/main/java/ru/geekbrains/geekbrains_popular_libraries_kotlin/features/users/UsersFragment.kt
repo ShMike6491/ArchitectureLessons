@@ -10,7 +10,9 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.BackButtonListener
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.R
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.FragmentUsersBinding
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.AndroidScreens
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.network.AndroidNetworkStatus
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.util.GlideImageLoader
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.util.ImageCacheImpl
 
 class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, BackButtonListener {
     private var binding: FragmentUsersBinding? = null
@@ -18,7 +20,7 @@ class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, 
 
     private val presenter by moxyPresenter { UsersPresenter(
         AndroidSchedulers.mainThread(),
-        App.instance.repository(),
+        App.instance.repository,
         App.instance.router,
         AndroidScreens()
     ) }
@@ -32,7 +34,14 @@ class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, 
     override fun backPressed() = presenter.backPressed()
 
     override fun init() {
-        adapter = UsersAdapter(presenter.usersListPresenter, GlideImageLoader())
+        adapter = UsersAdapter(
+            presenter.usersListPresenter,
+            GlideImageLoader(
+                AndroidNetworkStatus(requireContext()),
+                ImageCacheImpl(App.instance.database, requireContext()),
+                AndroidSchedulers.mainThread()
+            )
+        )
         b.rvUsers.adapter = adapter
     }
 

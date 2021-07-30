@@ -25,13 +25,13 @@ class DetailsPresenter(
 
     override fun onFirstViewAttach() {
         viewState.init(user)
-        user.repos?.let { loadData(it) }
+        loadData(user)
         listPresenter.itemClickListener = { itemView ->
             router.navigateTo(screens.repoPage(repoList[itemView.pos]))
         }
     }
 
-    private fun loadData(url: String) = repository.getUserRepos(url)
+    private fun loadData(user: User) = repository.getUserRepos(user)
         .observeOn(mainThread)
         .subscribe({ newList ->
             repoList = newList
