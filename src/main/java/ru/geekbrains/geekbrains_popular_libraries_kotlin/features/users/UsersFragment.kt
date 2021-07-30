@@ -8,22 +8,24 @@ import moxy.ktx.moxyPresenter
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.App
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.BackButtonListener
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.R
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.local.LocalDatabase
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.FragmentUsersBinding
-import ru.geekbrains.geekbrains_popular_libraries_kotlin.navigation.AndroidScreens
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.network.AndroidNetworkStatus
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.util.GlideImageLoader
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.util.ImageCacheImpl
+import javax.inject.Inject
 
 class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, BackButtonListener {
+    @Inject lateinit var database: LocalDatabase
+
     private var binding: FragmentUsersBinding? = null
     private val b get() = binding!!
 
-    private val presenter by moxyPresenter { UsersPresenter(
-        AndroidSchedulers.mainThread(),
-        App.instance.repository,
-        App.instance.router,
-        AndroidScreens()
-    ) }
+    private val presenter by moxyPresenter {
+        UsersPresenter(AndroidSchedulers.mainThread()).apply{
+            App.instance.appComponent.inject(this)
+        }
+    }
     private var adapter: UsersAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,7 +40,7 @@ class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, 
             presenter.usersListPresenter,
             GlideImageLoader(
                 AndroidNetworkStatus(requireContext()),
-                ImageCacheImpl(App.instance.database, requireContext()),
+                ImageCacheImpl(database, requireContext()),
                 AndroidSchedulers.mainThread()
             )
         )
@@ -55,6 +57,8 @@ class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, 
     }
 
     companion object {
-        fun newInstance() = UsersFragment()
+        fun newInstance() = UsersFragment().apply{
+            App.instance.appComponent.inject(this)
+        }
     }
 }
