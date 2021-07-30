@@ -3,7 +3,10 @@ package ru.geekbrains.geekbrains_popular_libraries_kotlin.dependencies
 import dagger.Component
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.activity.MainActivity
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.activity.MainPresenter
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.details.DetailsAdapter
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.details.DetailsFragment
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.details.DetailsPresenter
+import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.UsersAdapter
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.UsersFragment
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.features.users.UsersPresenter
 import javax.inject.Singleton
@@ -23,7 +26,8 @@ interface ApplicationComponent {
     fun inject(mainPresenter: MainPresenter)
 
     fun inject(usersPresenter: UsersPresenter)
-    fun inject(UsersFragment: UsersFragment)
+    fun inject(DetailsPresenter: DetailsPresenter)
 
-    fun inject(DetailsFragment: DetailsFragment)
+    fun inject(UsersAdapter: UsersAdapter)
+    fun inject(DetailsAdapter: DetailsAdapter)
 }

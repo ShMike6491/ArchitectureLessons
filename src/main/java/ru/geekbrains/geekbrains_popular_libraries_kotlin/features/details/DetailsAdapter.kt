@@ -9,9 +9,12 @@ import ru.geekbrains.geekbrains_popular_libraries_kotlin.data.User
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.ItemHeaderBinding
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.databinding.ItemRepoBinding
 import ru.geekbrains.geekbrains_popular_libraries_kotlin.util.IImageLoader
+import javax.inject.Inject
 
-class DetailsAdapter(private val presenter: IDetailsListPresenter, private val owner: User, val imageLoader: IImageLoader<ImageView>)
+class DetailsAdapter(private val presenter: IDetailsListPresenter, private val owner: User)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    @Inject lateinit var imageLoader: IImageLoader<ImageView>
 
     override fun getItemViewType(position: Int) = when (position) {
         0 -> VIEW_TYPE_HEADER
